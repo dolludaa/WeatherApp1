@@ -46,14 +46,9 @@ struct WeatherView: View {
                     Spacer()
                         .frame(height:  80)
                     
-                    Image ("town")
-                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 400)
                     
-//                    placeholder: {
-//                        ProgressView()
-//                    }
+                    
+
                     
                     Spacer()
                 }
@@ -63,30 +58,44 @@ struct WeatherView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             
             VStack {
-                Spacer()
-                VStack(alignment: .leading, spacing: 20) {
-                    Text("Weather now")
-                        .bold()
-                        .padding(.bottom)
+                Image ("town")
+                        .resizable()
+                            .aspectRatio(contentMode: .fill)
+                        .frame(width: 400)
+                        .frame()
+                            .padding(. top, 100)
+                            .padding(.bottom, -300)
+             VStack   {
+                  
                     
-                    HStack {
-                        WeatherRow(logo: "thermometer", name: "Min temp", value: (weather.main.tempMin.roundDouble() + ("°")))
-                        Spacer()
-                        WeatherRow(logo: "thermometer", name: "Max temp", value: (weather.main.tempMax.roundDouble() + "°"))
+                    Spacer()
+                   
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("Weather now")
+                            .bold()
+                            .padding(.bottom)
+                        
+                        
+                        HStack {
+                            
+                            WeatherRow(logo: "thermometer", name: "Min temp", value: (weather.main.tempMin.roundDouble() + ("°")))
+                            Spacer()
+                            WeatherRow(logo: "thermometer", name: "Max temp", value: (weather.main.tempMax.roundDouble() + "°"))
+                        }
+                        
+                        HStack {
+                            WeatherRow(logo: "wind", name: "Wind speed", value: (weather.wind.speed.roundDouble() + " m/s"))
+                            Spacer()
+                            WeatherRow(logo: "humidity", name: "Humidity", value: "\(weather.main.humidity.roundDouble())%")
+                        }
                     }
-                    
-                    HStack {
-                        WeatherRow(logo: "wind", name: "Wind speed", value: (weather.wind.speed.roundDouble() + " m/s"))
-                        Spacer()
-                        WeatherRow(logo: "humidity", name: "Humidity", value: "\(weather.main.humidity.roundDouble())%")
-                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+                    .padding(.bottom, 20)
+                    .foregroundColor(Color(hue: 0.656, saturation: 0.787, brightness: 0.354))
+                    .background(.white)
+                    .cornerRadius(20, corners: [.topLeft, .topRight])
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding()
-                .padding(.bottom, 20)
-                .foregroundColor(Color(hue: 0.656, saturation: 0.787, brightness: 0.354))
-                .background(.white)
-                .cornerRadius(20, corners: [.topLeft, .topRight])
             }
         }
         .edgesIgnoringSafeArea(.bottom)
@@ -98,6 +107,6 @@ struct WeatherView: View {
 struct WeatherView_Previews: PreviewProvider {
     static var previews: some View {
         WeatherView(weather: previewWeather)
+        
     }
 }
-
