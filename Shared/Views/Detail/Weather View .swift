@@ -61,8 +61,8 @@ struct WeatherView: View {
                 Image ("town")
                         .resizable()
                             .aspectRatio(contentMode: .fill)
-                        .frame(width: 400)
-                        .frame()
+                        .frame(width: 350)
+                        
                             .padding(. top, 100)
                             .padding(.bottom, -300)
              VStack   {
