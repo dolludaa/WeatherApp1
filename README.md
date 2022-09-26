@@ -21,6 +21,7 @@ This app is very simple project, which designed to understand SwiftUI. It includ
   So, the main goal of this project was to learn more about using SwiftUI, as well as get to know the API and Jason better.
 
 It turned out to be the easiest to draw a UI, but the most important problem was displaying the weather based on location. The data in my app is only calculated for the weather at the moment (thanks to the Open Weather API), but there are no forecasts in the app.
+
 A structure was created with all the requested elements. To make this structure encoded and decoded, we will conform to the Codable protocol. After which I use custom types to handle these cases.
 ``` swift
 struct ResponseBody: Decodable {
