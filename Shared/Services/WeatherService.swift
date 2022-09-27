@@ -4,13 +4,17 @@ import CoreLocation
 
 class WeatherManager {
     func getCurrentWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees) async throws -> ResponseBody {
-        let error = NSError.init(domain: "missing URL", code: 200)
-        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&appid=\("529e577bf06be7ba17835437c3b156e0" )&units=metric") else {throw error}
+        let errorMissingURL = NSError.init(domain: "missing URL", code: -1)
+
+        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&appid=\("529e577bf06be7ba17835437c3b156e0" )&units=metric")
+        else { throw errorMissingURL }
         let urlRequest = URLRequest(url: url)
+        let errorStatusCode = NSError.init(domain: "Wrong status code", code: -1)
         
         let (data, response) = try await URLSession.shared.data(for: urlRequest)
         
-        guard (response as? HTTPURLResponse)?.statusCode == 200 else { fatalError("Error while fetching data") }
+        guard (response as? HTTPURLResponse)?.statusCode == 200
+        else { throw errorStatusCode }
         
         let decodedData = try JSONDecoder().decode(ResponseBody.self, from: data)
         
