@@ -4,25 +4,26 @@ This app is very simple project, which designed to understand SwiftUI. It includ
 
 <img align="right" width="25%" src="https://user-images.githubusercontent.com/111228178/192374728-7e917d15-5a3c-4757-a791-cdc950da4cbe.PNG ">
 
-## Keyword
 
-1. SwiftUI
-2. Stacks
-3. Images and Text
-4. JSON & Codable
-
-## Prerequisites
-
-* A valid API key from Openweathermap
-* A Mac running macOS Catalina
-* Xcode 14 
   
  ## *What I've learned* 
   So, the main goal of this project was to learn more about using SwiftUI, as well as get to know the API and Jason better.
 
-It turned out to be the easiest to draw a UI, but the most important problem was displaying the weather based on location. The data in my app is only calculated for the weather at the moment (thanks to the Open Weather API), but there are no forecasts in the app.
+1. To build the UI part, I used swiftui, 2 screens are drawn on it, a screen for accessing the location and a weather display screen
 
-A structure was created with all the requested elements. To make this structure encoded and decoded, we will conform to the Codable protocol. After that I created decodable nested objects
+2. Before requesting the weather in the beginning, I needed to get access to the user's location. For this I used CoreLocation. To begin with, we worked with two main parameters - longitude and latitude. In order not to enter this data every time I decided to create a welcome screen.  This screen contains a location button. 
+``` swift
+LocationButton(.sendCurrentLocation) {
+                locationManager.requestLocation()
+            }
+```
+
+  The data in my app is only calculated for the weather at the moment (thanks to the Open Weather API), but there are no forecasts in the app.
+
+ 3. Having received permission to access geodata from the user, I was already able to make requests to the Open Weather API using the RESTFUL API using URLSession.
+   
+ 4. The server's response comes in json format and in order to work with this data in the application, I needed to decode the received objects. To do this, I used Json Decoder and Decodable protocol.
+
 ``` swift
 struct ResponseBody: Decodable {
     var coord: CoordinatesResponse
@@ -42,28 +43,12 @@ struct ResponseBody: Decodable {
         var description: String
         var icon: String
 ```
-To begin with, we worked with two main indicators - longitude and latitude, in order not to enter this data every time, a welcome screen was created on which there is a share geolocation button, after which using CoreLocationUI and CoreLocation.
-``` swift
-LocationButton(.sendCurrentLocation) {
-                locationManager.requestLocation()
-            }
-```
-To decode the received data, we call the API and use JSONDecoder. Initially, the URL cannot be used just like that, in order to solve this problem I needed to convert it to a URL type before you can make a call. To do this, you can use a simple guard operator. Also to check that the data is coming in without errors.
-```swift
-if let weather = weather {
-                    WeatherView(weather: weather)
-                } else {
-                    LoadingView()
-                        .task {
-                            do {
-                                weather = try await weatherManager.getCurrentWeather(latitude: location.latitude, longitude: location.longitude)
-                            } catch {
-                                print("Error getting weather: \(error)")
-                            }
-                        }
-                }
-```
-After that, the User Interface was drawn in more detail.
+
+
+ 5. Initially, the URL cannot be used just like that,becuase it is in ```STRING``` format, in order to solve this problem I needed to convert it to a URL type before you can make a call. To do this, you can use a simple guard operator. 
+
+6. Further, the received objects are already transferred to the UI layer where this data is outlined. To work with asynchronous data, I decided to use async await because it is more logically combined with SwiftUI than the Result approach.
+
 :sunny: :umbrella: :cloud: :snowflake: :zap:
 
 
@@ -93,4 +78,17 @@ class WeatherManager {
 ```
 4. Run the simulator
 
-<img src="https://i.gifer.com/2GU.gif" width="200" height="200" />
+
+
+## Keyword
+
+* SwiftUI
+*  Stacks
+*  Images and Text
+*  JSON & Codable
+
+## Prerequisites
+
+* A valid API key from Openweathermap
+* A Mac running macOS Catalina
+* Xcode 14 
