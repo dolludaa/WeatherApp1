@@ -7,20 +7,13 @@ This app is very simple project, which designed to understand SwiftUI. It includ
 
   
  ## *What I've learned* 
-  So, the main goal of this project was to learn more about using SwiftUI, as well as get to know the API and Jason better.
+  So, the main goal of this project was to learn more about SwiftUI, as well as get to know the API and Jason better.
 
-1. To build the UI part, I used swiftui, 2 screens are drawn on it, a screen for accessing the location and a weather display screen
+1. To build the UI part, I used swiftUI to make 2 screens, a screen for accessing the location and a weather display screen
 
-2. Before requesting the weather in the beginning, I needed to get access to the user's location. For this I used CoreLocation. To begin with, we worked with two main parameters - longitude and latitude. In order not to enter this data every time I decided to create a welcome screen.  This screen contains a location button. 
-``` swift
-LocationButton(.sendCurrentLocation) {
-                locationManager.requestLocation()
-            }
-```
+2. Before requesting the weather in the beginning, I needed to get access to the user's location. For this I used CoreLocation. The data in my app is only calculated for the weather at the moment (thanks to the Open Weather API), but there are no forecasts in the app.
 
-  The data in my app is only calculated for the weather at the moment (thanks to the Open Weather API), but there are no forecasts in the app.
-
- 3. Having received permission to access geodata from the user, I was already able to make requests to the Open Weather API using the RESTFUL API using URLSession.
+ 3. Having received permission to access geodata from the user, I was already able to make requests to the Open Weather API using the RESTFUL API with the help of the URLSession.
    
  4. The server's response comes in json format and in order to work with this data in the application, I needed to decode the received objects. To do this, I used Json Decoder and Decodable protocol.
 
@@ -44,10 +37,7 @@ struct ResponseBody: Decodable {
         var icon: String
 ```
 
-
- 5. Initially, the URL cannot be used just like that,becuase it is in ```STRING``` format, in order to solve this problem I needed to convert it to a URL type before you can make a call. To do this, you can use a simple guard operator. 
-
-6. Further, the received objects are already transferred to the UI layer where this data is outlined. To work with asynchronous data, I decided to use async await because it is more logically combined with SwiftUI than the Result approach.
+5. Further, the received objects are already transferred to the UI layer where this data is outlined. To work with asynchronous data, I decided to use async await because it is more logically combined with SwiftUI than the Result approach.
 
 :sunny: :umbrella: :cloud: :snowflake: :zap:
 
